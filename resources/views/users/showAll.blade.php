@@ -19,7 +19,7 @@
 @endsection
 
 @push('scripts')
-<script>
+<script type="module">
     window.axios.get('/api/users')
         .then((response) => {
             const usersElement = document.getElementById('users');
@@ -33,8 +33,8 @@
         });
 </script>
 
-<script>
-    Echo.channel('users')
+<script type="module">
+    window.Echo.channel('users')
         .listen('UserCreated', (e) => {
             const usersElement = document.getElementById('users');
             let element = document.createElement('li');
