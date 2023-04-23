@@ -33,11 +33,11 @@ class ChatController extends Controller
         return response()->json('Message Send!');
     }
 
-    // public function greetReceived(Request $request, User $user)
-    // {
-    //     broadcast(new GreetingSent($user, "{$request->user()->name} greeted you"));
-    //     broadcast(new GreetingSent($request->user(), "You greeted {$user->name}"));
+    public function greetReceived(Request $request, User $user)
+    {
+        broadcast(new GreetingSent($user, "{$request->user()->name} greeted you"));
+        broadcast(new GreetingSent($request->user(), "You greeted {$user->name}"));
 
-    //     return "Greeting {$user->name} from {$request->user()->name}";
-    // }
+        return "Greeting {$user->name} from {$request->user()->name}";
+    }
 }
