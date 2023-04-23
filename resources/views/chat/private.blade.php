@@ -13,7 +13,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Chat</div>
+                <div class="card-header">Private Chat</div>
 
                 <div class="card-body">
                     <div class="row p-2">
@@ -49,54 +49,13 @@
 @endsection
 
 @push('scripts')
-<script type="module">
-    const usersElement = document.getElementById('users');
-    const messagesElement = document.getElementById('messages');
-    window.Echo.join('chat')
-        .here((users) => {
-            console.log(`HERE ${JSON.stringify(users)}`)
-            users.forEach((user, index) => {
-                let element = document.createElement('li');
-                element.setAttribute('id', user.id);
-                element.innerText = user.name;
-                element.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.axios.post('/chat/greet/' + user.id);
-
-                });
-                usersElement.appendChild(element);
-            });
-        })
-        .joining((user) => {
-            console.log(`JOIN ${JSON.stringify(user)}`)
-
-            let element = document.createElement('li');
-            element.setAttribute('id', user.id);
-            element.innerText = user.name;
-            element.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.axios.post('/chat/greet/' + user.id);
-
-            });
-            usersElement.appendChild(element);
-        })
-        .leaving((user) => {
-            const element = document.getElementById(user.id);
-            element.parentNode.removeChild(element);
-        })
-        .listen('MessageSent', (e) => {
-            let element = document.createElement('li');
-            element.innerText = e.user.name + ': ' + e.message;
-            messagesElement.appendChild(element);
-        });
-</script>
 
 <script type="module">
     const messageElement = document.getElementById('message');
     const sendElement = document.getElementById('send');
     sendElement.addEventListener('click', (e) => {
         e.preventDefault();
-        window.axios.post('/chat/message', {
+        window.axios.post('/chat/message/private', {
             message: messageElement.value,
         });
         messageElement.value = '';
@@ -104,16 +63,13 @@
 </script>
 
 <script type="module">
-    function greetUser(id) {}
-</script>
-
-<script type="module">
     const messagesElement = document.getElementById('messages');
 
-    window.Echo.private('chat.greet.{{ auth()->user()->id }}')
-        .listen('GreetingSent', (e) => {
+    window.Echo.private('chat.private.{{ 1 }}')
+        .listen('MessagePrivate', (e) => {
+            console.log(e)
             let element = document.createElement('li');
-            element.innerText = e.message;
+            element.innerText =  e.message;
             element.classList.add('text-success');
             messagesElement.appendChild(element);
         });

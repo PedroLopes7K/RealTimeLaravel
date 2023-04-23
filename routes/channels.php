@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Chat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -31,4 +32,13 @@ Broadcast::channel('chat', function ($user) {
 
 Broadcast::channel('chat.greet.{receiver}', function ($user, $receiver) {
     return (int) $user->id === (int) $receiver;
+});
+Broadcast::channel('chat.private.{chat}', function ($user, $chat) {
+    info("User :$user");
+    info(" CHAT: $chat");
+    $validateChat = Chat::find($chat);
+
+    info($validateChat);
+    return (int) $user->id == (int) $validateChat->first_user || (int) $user->id == (int) $validateChat->second_user ;
+   
 });

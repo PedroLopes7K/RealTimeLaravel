@@ -27,6 +27,8 @@ Route::view('/users', 'users.showAll')->name('users.all');
 Route::view('/game', 'game.show')->name('game.show');
 
 Route::get('/chat', [ChatController::class, 'showChat'])->name('chat.show');
+Route::get('/chat/private', [ChatController::class, 'chatPrivate'])->name('chat.private');
 Route::post('/chat/message', [ChatController::class, 'messageReceived'])->name('chat.message');
+Route::post('/chat/message/private', [ChatController::class, 'messagePrivate'])->name('chat.message.private');
 Route::post('/chat/greet/{user}', [ChatController::class, 'greetReceived'])->name('chat.greet');
 // Route::get('/chat/greet/user', [ChatController::class, 'greetReceived'])->name('chat.greet');
