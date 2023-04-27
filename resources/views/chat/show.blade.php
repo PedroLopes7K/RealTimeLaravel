@@ -27,7 +27,7 @@
                             <form>
                                 <div class="row py-3">
                                     <div class="col-10">
-                                        <input id="message" class="form-control" type="text">
+                                        <input id="message" class="form-control" name="message" type="text">
                                     </div>
                                     <div class="col-2">
                                         <button id="send" type="submit" class="btn btn-primary btn-block">Send</button>
